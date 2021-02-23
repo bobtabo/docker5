@@ -2,6 +2,7 @@
 .docker/
 /db
 /data
+/mongo
 /src/*
 !/src/laravel
 .env

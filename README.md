@@ -11,4 +11,7 @@ https://qiita.com/_bobtabo_/items/e76a14bd7ed65b5e34b1
 * Laravel 8.x
 * Redis 最新版
 * MailHog 最新版
-* XDebug 3.x
+* phpMyAdmin 最新版
+* MongoDB 最新版
+* mongo-express 最新版
+* Redmon 最新版
