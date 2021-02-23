@@ -1,0 +1,63 @@
+version: '3.8'
+
+volumes:
+    phpsocket:
+
+services:
+  nginx:
+    container_name: ${NGINX_CONTAINER}
+    build: ./nginx
+    ports:
+      - '${NGINX_HTTP_PORT}:80'
+      - '${NGINX_HTTPS_PORT}:443'
+    volumes:
+      - ./nginx/certs:/etc/nginx/certs
+      - ./nginx/templates:/etc/nginx/templates
+      - ./src:/home/docker
+      - phpsocket:/var/run
+    depends_on:
+      - php
+    environment:
+      - APP_NAME=${APP_NAME}
+      - SERVER_NAME=${SERVER_NAME}
+      - NGINX_CERTS_NAME=${NGINX_CERTS_NAME}
+
+  php:
+    container_name: ${PHP_CONTAINER}
+    build: ./php
+    ports:
+      - '${PHP_XDEBUG_PORT}:9000'
+    volumes:
+      - ./src:/home/docker
+      - phpsocket:/var/run
+    depends_on:
+      - mysql
+      - redis
+
+  mysql:
+    image: mysql:8
+    container_name: ${MYSQL_CONTAINER}
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+    ports:
+      - "${MYSQL_PORT}:3306"
+    volumes:
+      - ./db:/var/lib/mysql
+
+  redis:
+    image: redis:latest
+    container_name: ${REDIS_CONTAINER}
+    ports:
+      - "${REDIS_PORT}:6379"
+    volumes:
+      - "./data:/data"
+
+  mailhog:
+      image: mailhog/mailhog
+      container_name: ${MAILHOG_CONTAINER}
+      ports:
+        - "${MAILHOG_PORT}:8025"

@@ -1,0 +1,7 @@
+.DS_Store
+.docker/
+/db
+/data
+/src/*
+!/src/laravel
+.env
