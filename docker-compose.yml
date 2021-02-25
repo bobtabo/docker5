@@ -42,11 +42,36 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+      TZ: "Asia/Tokyo"
     command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
     ports:
       - "${MYSQL_PORT}:3306"
     volumes:
+      - ./mysql/master/my.cnf:/etc/mysql/my.cnf
       - ./data/mysql:/var/lib/mysql
+      - ./mysql/master/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  mysql-slave:
+    image: mysql:8
+    container_name: ${MYSQL_SLAVE_CONTAINER}
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+      TZ: "Asia/Tokyo"
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+    ports:
+      - "${MYSQL_SLAVE_PORT}:3306"
+    depends_on:
+      - mysql
+    tmpfs:
+      - /var/lib/mysql
+    volumes:
+      - ./mysql/slave/my.cnf:/etc/mysql/my.cnf
+      - ./mysql/slave/init.sql:/docker-entrypoint-initdb.d/init.sql
 
   redis:
     image: redis:latest
