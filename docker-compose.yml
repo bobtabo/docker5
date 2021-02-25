@@ -46,7 +46,7 @@ services:
     ports:
       - "${MYSQL_PORT}:3306"
     volumes:
-      - ./db:/var/lib/mysql
+      - ./data/mysql:/var/lib/mysql
 
   redis:
     image: redis:latest
@@ -54,7 +54,7 @@ services:
     ports:
       - "${REDIS_PORT}:6379"
     volumes:
-      - "./data:/data"
+      - "./data/redis:/data"
 
   mailhog:
       image: mailhog/mailhog
@@ -75,7 +75,7 @@ services:
       ports:
         - "${PMA_PORT}:80"
       volumes:
-        - ./phpmyadmin/sessions:/sessions
+        - ./data/phpmyadmin/sessions:/sessions
 
   mongo:
     image: mongo
@@ -86,7 +86,7 @@ services:
     ports:
       - "${MONGO_PORT}:27017"
     volumes:
-      - ./mongo:/data/db
+      - ./data/mongo:/data/db
 
   mongo-express:
     image: mongo-express

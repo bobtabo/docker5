@@ -1,6 +1,6 @@
 この記事用です。
 
-https://qiita.com/_bobtabo_/items/e76a14bd7ed65b5e34b1
+https://qiita.com/_bobtabo_/items/ca984fb5b3e8109830ef
 
 
 # インストールするもの
