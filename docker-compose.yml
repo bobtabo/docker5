@@ -26,7 +26,7 @@ services:
     container_name: ${PHP_CONTAINER}
     build: ./php
     ports:
-      - '${PHP_XDEBUG_PORT}:9000'
+      - '${PHP_XDEBUG_PORT}:9001'
     volumes:
       - ./src:/home/docker
       - phpsocket:/var/run
