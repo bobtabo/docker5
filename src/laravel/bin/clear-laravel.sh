@@ -9,4 +9,4 @@ composer dump-autoload
 php artisan ide-helper:generate
 php artisan ide-helper:models -N
 php artisan ide-helper:meta
-find . -name '._.DS_Store' -type f -ls -delete
+find . -name '.DS_Store' -type f -ls -delete
